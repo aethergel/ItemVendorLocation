@@ -33,7 +33,7 @@ internal class Localization
                                    (ClientLanguage)4 => /*lang=json,strict*/ """
                                                                              {
                                                                                  "ContextMenuItem": {
-                                                                                     "message": "查找兑换位置"
+                                                                                     "message": "상인 위치"
                                                                                  }
                                                                              }
                                                                              """,

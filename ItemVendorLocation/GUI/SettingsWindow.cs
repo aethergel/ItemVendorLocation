@@ -14,7 +14,7 @@ namespace ItemVendorLocation.GUI;
 
 public class SettingsWindow : Window
 {
-    public SettingsWindow() : base("Item Vendor Location Settings")
+    public SettingsWindow() : base("Item Vendor Location 설정")
     {
         RespectCloseHotkey = true;
 
@@ -43,79 +43,76 @@ public class SettingsWindow : Window
         }
 #endif
         var filterDuplicates = Service.Configuration.FilterDuplicates;
-        if (ImGui.Checkbox("Filter Duplicates", ref filterDuplicates))
+        if (ImGui.Checkbox("중복 필터", ref filterDuplicates))
         {
             Service.Configuration.FilterDuplicates = filterDuplicates;
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"If checked, will filter duplicate vendors by location");
+        ImGuiComponents.HelpMarker(@"각 지역마다 중복되는 상인은 제외합니다");
 
         var filterGCResults = Service.Configuration.FilterGCResults;
-        if (ImGui.Checkbox("Filter GC Results", ref filterGCResults))
+        if (ImGui.Checkbox("총사령부 필터", ref filterGCResults))
         {
             Service.Configuration.FilterGCResults = filterGCResults;
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"If checked, will only show your own GC vendor");
+        ImGuiComponents.HelpMarker(@"소속되어있는 총사령부 상인만 표시합니다");
 
         var filterNPCsWithNoLocation = Service.Configuration.FilterNPCsWithNoLocation;
-        if (ImGui.Checkbox("Filter Results With No Location", ref filterNPCsWithNoLocation))
+        if (ImGui.Checkbox("위치 필터", ref filterNPCsWithNoLocation))
         {
             Service.Configuration.FilterNPCsWithNoLocation = filterNPCsWithNoLocation;
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"If checked, will only show npcs with a location");
+        ImGuiComponents.HelpMarker(@"위치 좌표가 존재하는 상인만 표시합니다");
 
         var showShopName = Service.Configuration.ShowShopName;
-        if (ImGui.Checkbox("Show Shop Info", ref showShopName))
+        if (ImGui.Checkbox("상점 정보 표시", ref showShopName))
         {
             Service.Configuration.ShowShopName = showShopName;
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"If checked, will show shop name info e.g. 'Purchase Disciple of Magic Gear - Purchase Gear (Lv. 20-29)'");
+        ImGuiComponents.HelpMarker(@"상점 정보를 표시합니다 / 예: '방어구 구입(마법사) - 방어구 구입 (레벨 20~29)'");
 
         var highlightSelectedNpc = Service.Configuration.HighlightSelectedNpc;
-        if (ImGui.Checkbox("Highlight selected npc", ref highlightSelectedNpc))
+        if (ImGui.Checkbox("선택한 상인 표시", ref highlightSelectedNpc))
         {
             Service.Configuration.HighlightSelectedNpc = highlightSelectedNpc;
             Service.Framework.Run(() => Service.HighlightObject.ToggleHighlight(highlightSelectedNpc));
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"If checked, will highlight npcs that sell last item searched for once they are visible on-screen");
+        ImGuiComponents.HelpMarker(@"검색한 항목을 판매하는 상인을 테두리로 표시합니다");
         ImGui.SameLine();
         var highlightColorNames = Enum.GetNames<ObjectHighlightColor>();
         var highlightColorValues = Enum.GetValues<ObjectHighlightColor>();
         var selectedHighlightColor = Array.IndexOf(highlightColorValues, Service.Configuration.HighlightColor);
         ImGui.SetNextItemWidth(150f);
-        if (ImGui.Combo("Highlight Color", ref selectedHighlightColor, highlightColorNames, highlightColorNames.Length))
+        if (ImGui.Combo("표시 색상", ref selectedHighlightColor, highlightColorNames, highlightColorNames.Length))
         {
             Service.Configuration.HighlightColor = (ObjectHighlightColor)selectedHighlightColor;
             Service.Configuration.Save();
         }
 
         var highlightMenuSelections = Service.Configuration.HighlightMenuSelections;
-        if (ImGui.Checkbox("Highlight menu selections", ref highlightMenuSelections))
+        if (ImGui.Checkbox("선택 메뉴 표시", ref highlightMenuSelections))
         {
             Service.Configuration.HighlightMenuSelections = highlightMenuSelections;
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"If checked, will highlight menu selections so items are easier to find.
+        ImGuiComponents.HelpMarker(@"선택 메뉴를 색으로 표시해 아이템을 찾기 쉽도록 만듭니다.
 
-NOTE: If you search for another item that is sold by a vendor whose menu you already have open, this
-will cause both the previous item and the new item to be highlighted. I could fix this, but the only way I
-know how is to redraw every non-highlighted item with the original color. The highlighting occurs every
-frame, and I'm not willing to add another loop per frame for this use case which I think is stupid.");
+참조: 상점 창을 열어둔 채로 또 다른 검색을 할 경우 제대로 작동하지 않을 수 있습니다.");
         ImGui.SameLine();
         // this part seems dumb to me, but it works
         var selectedShopHighlightColor = Service.Configuration.ShopHighlightColor;
         ImGui.SetNextItemWidth(150f);
-        selectedShopHighlightColor = ImGuiComponents.ColorPickerWithPalette(1, "Highlight Color", selectedShopHighlightColor, ImGuiColorEditFlags.NoAlpha);
+        selectedShopHighlightColor = ImGuiComponents.ColorPickerWithPalette(1, "표시 색상", selectedShopHighlightColor, ImGuiColorEditFlags.NoAlpha);
         if (selectedShopHighlightColor != Service.Configuration.ShopHighlightColor)
         {
             Service.Configuration.ShopHighlightColor = selectedShopHighlightColor;
@@ -124,7 +121,7 @@ frame, and I'm not willing to add another loop per frame for this use case which
 
         ImGui.SetNextItemWidth(200f);
         int maxSearchResults = Service.Configuration.MaxSearchResults;
-        if (ImGui.InputInt("Max Search Results", ref maxSearchResults))
+        if (ImGui.InputInt("최대 검색결과 개수", ref maxSearchResults))
         {
             if (maxSearchResults is <= 50 and >= 1)
             {
@@ -133,31 +130,29 @@ frame, and I'm not willing to add another loop per frame for this use case which
             }
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"The max number of search results when using the text command to prevent chat spam.
-
-Max allowable is 50.");
+        ImGuiComponents.HelpMarker(@"명령어를 사용해 검색했을때 표시할 검색결과의 최대 개수를 설정합니다.
+최대로 설정할 수 있는 값은 50 입니다.");
 
         var resultsViewTypeNames = Enum.GetNames<ResultsViewType>();
         var resultsViewTypeValues = Enum.GetValues<ResultsViewType>();
         var selectedResultsViewType = Array.IndexOf(resultsViewTypeValues, Service.Configuration.ResultsViewType);
         ImGui.SetNextItemWidth(200f);
-        if (ImGui.Combo("Results View Type", ref selectedResultsViewType, resultsViewTypeNames, resultsViewTypeNames.Length))
+        if (ImGui.Combo("검색결과 표시 유형", ref selectedResultsViewType, resultsViewTypeNames, resultsViewTypeNames.Length))
         {
             Service.Configuration.ResultsViewType = resultsViewTypeValues[selectedResultsViewType];
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"How the plugin displays vendor location results.
+        ImGuiComponents.HelpMarker(@"플러그인이 상인 위치를 표시할 방식입니다.
 
-Single will pick the first result and print it to your chat window.
-
-Multiple will display the results in a popup window. If you leave it as this the plugin will function as it did before with no changes.");
+Single은 하나의 결과만 메시지 창에 표시합니다.
+Multiple은 팝업 창에 결과 목록을 표시합니다.");
 
         var uiColors = Service.DataManager.GetExcelSheet<UIColor>().DistinctBy(i => i.ClassicFF).ToList();
         int npcNameChatColor = Service.Configuration.NPCNameChatColor;
         ImGui.SetNextItemWidth(200f);
         // my lame way to allow selection of colors as defined in the UIColor sheet
-        if (ImGui.BeginCombo("NPC Name Text Color", ""))
+        if (ImGui.BeginCombo("상인 이름 메시지 색상", ""))
         {
             foreach (var color in uiColors)
             {
@@ -183,7 +178,7 @@ Multiple will display the results in a popup window. If you leave it as this the
             ImGui.EndCombo();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"The chat text color of the NPC name when searching via /pvendor.");
+        ImGuiComponents.HelpMarker(@"/pvendor 명령어를 사용해 검색했을때 메시지에서 상인 이름을 표시할 색상을 변경합니다.");
 
         var keyNames = Service.KeyState.GetValidVirtualKeys().Select(i => i.GetFancyName()).ToArray();
         keyNames = [.. keyNames.Prepend("None")];
@@ -191,12 +186,12 @@ Multiple will display the results in a popup window. If you leave it as this the
         keyValues = [.. keyValues.Prepend(VirtualKey.NO_KEY)];
         var selectedKey = Array.IndexOf(keyValues, Service.Configuration.SearchDisplayModifier);
         ImGui.SetNextItemWidth(200f);
-        if (ImGui.Combo("Results View Type Modifier", ref selectedKey, keyNames, keyNames.Length))
+        if (ImGui.Combo("검색결과 표시 유형 조합 키", ref selectedKey, keyNames, keyNames.Length))
         {
             Service.Configuration.SearchDisplayModifier = keyValues[selectedKey];
             Service.Configuration.Save();
         }
         ImGui.SameLine();
-        ImGuiComponents.HelpMarker(@"Changes the Results View Type when held.");
+        ImGuiComponents.HelpMarker(@"누르고 있는동안 검색결과 표시 유형을 변경합니다.");
     }
 }

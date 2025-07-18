@@ -44,7 +44,7 @@ public class EntryPoint : IDalamudPlugin
         _ = pi.Create<Service>();
 
         Localization.SetupLocalization(Service.ClientState.ClientLanguage);
-        _buttonName = Loc.Localize("ContextMenuItem", "Vendor location");
+        _buttonName = Loc.Localize("ContextMenuItem", "상인 위치");
         ItemLookup = new();
         Service.Plugin = this;
         Service.Configuration = pi.GetPluginConfig() as PluginConfiguration ?? new PluginConfiguration();
@@ -78,7 +78,7 @@ public class EntryPoint : IDalamudPlugin
 
         _ = Service.CommandManager.AddHandler(_commandName, new(OnCommand)
         {
-            HelpMessage = "Displays the Item Vendor Location config window",
+            HelpMessage = "Item Vendor Location 설정 패널",
 
         });
     }
@@ -126,7 +126,7 @@ public class EntryPoint : IDalamudPlugin
             };
 
             if (isGlamour)
-                menuItem.Name = _buttonName + "(Glamour)";
+                menuItem.Name = _buttonName + "(투영)";
             else
                 menuItem.Name = _buttonName;
 

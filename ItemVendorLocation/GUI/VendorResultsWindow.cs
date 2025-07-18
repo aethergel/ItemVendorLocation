@@ -41,7 +41,7 @@ public class VendorResultsWindow : Window
         {
             if (location.TerritoryType == 282)
             {
-                ImGui.Text("Player Housing");
+                ImGui.Text("플레이어 하우징");
             }
             else
             {
@@ -67,10 +67,10 @@ public class VendorResultsWindow : Window
                 {
                     if (ImGui.IsMouseReleased(ImGuiMouseButton.Right))
                     {
-                        ImGui.SetClipboardText($"{_itemToDisplay.Name} -> {npcInfo.Name}@{placeString}, costs {costStr}");
+                        ImGui.SetClipboardText($"{_itemToDisplay.Name} -> {npcInfo.Name}@{placeString}, 가격: {costStr}");
                         Service.NotificationManager.AddNotification(new()
                         {
-                            Content = "Copied vendor info to clipboard",
+                            Content = "상인 정보를 복사했습니다",
                             Title = "ItemVendorLocation",
                             Type = NotificationType.Success,
                         });
@@ -106,8 +106,8 @@ public class VendorResultsWindow : Window
 
     public override void Draw()
     {
-        ImGui.Text($"{_itemToDisplay.Name} Vendor list:");
-        ImGuiComponents.HelpMarker("You can right-click the button to copy vendor info to clipboard");
+        ImGui.Text($"{_itemToDisplay.Name} - 상인 목록:");
+        ImGuiComponents.HelpMarker("위치 버튼을 우클릭하여 상인 정보를 복사할 수 있습니다");
 
         var columnCount = 3;
 #if DEBUG
@@ -131,14 +131,14 @@ public class VendorResultsWindow : Window
 #if DEBUG
         ImGui.TableSetupColumn("NPC ID");
 #endif
-        ImGui.TableSetupColumn("NPC Name");
+        ImGui.TableSetupColumn("상인 이름");
         if (Service.Configuration.ShowShopName && _itemToDisplay.HasShopNames())
         {
-            ImGui.TableSetupColumn("Shop Name");
+            ImGui.TableSetupColumn("상점 정보");
         }
 
-        ImGui.TableSetupColumn("Location");
-        ImGui.TableSetupColumn(_itemToDisplay.Type == ItemType.CollectableExchange ? "Exchange Rate" : "Cost");
+        ImGui.TableSetupColumn("위치");
+        ImGui.TableSetupColumn(_itemToDisplay.Type == ItemType.CollectableExchange ? "Exchange Rate" : "가격");
 
         if (_itemToDisplay.Type == ItemType.Achievement)
         {

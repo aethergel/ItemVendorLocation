@@ -1,11 +1,11 @@
-author: electr0sheep, Nuko
+﻿author: electr0sheep, Nuko
 name: Item Vendor Location
-punchline: Shows you where to buy vendor items
-description: Adds a context menu option for items that will show you where to find items you can buy off a vendor
+punchline: 상점 아이템을 어디서 구매할 수 있는지 보여줍니다
+description: 상인의 위치를 표시하는 우클릭 메뉴 옵션을 추가합니다
 repo_url: https://github.com/electr0sheep/ItemVendorLocation
 icon_url: https://raw.githubusercontent.com/electr0sheep/ItemVendorLocation/main/Images/icon.png
 image_urls: [
-  https://raw.githubusercontent.com/electr0sheep/ItemVendorLocation/main/Images/ContextMenu.png
+  https://raw.githubusercontent.com/aethergel/ItemVendorLocation/ko/Images/ContextMenu.png
 ]
 tags: [
   item
